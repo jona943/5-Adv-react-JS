@@ -44,10 +44,13 @@ function App() {
   }
 
   return (
-    <div>
+    <div className="
+    flex h-screen w-full bg-slate-950 
+    text-slate-100 font-sans overflow-hidden">
+
       <Sidebar chat={historyChats} onNewChat={handleNewChat}/>
 
-      <main>
+      <main className="flex-1 flex flex-col h-full bg-slate-900">
         <header>
           <div>
             <button>
@@ -65,7 +68,7 @@ function App() {
         <MessageList messages={messages} loading={loading}/>
 
         <ChatInput onSendMessage={handleSendMessage}/>
-        
+
       </main>
     </div>
   )

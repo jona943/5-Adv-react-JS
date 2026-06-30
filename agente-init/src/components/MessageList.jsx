@@ -1,6 +1,6 @@
 import { Bot, User } from "lucide-react";
 
-function MessageList({ messages = [], loadig = false}) {
+function MessageList({ messages = [], loading = false}) {
     return (
         <section>
             <div>

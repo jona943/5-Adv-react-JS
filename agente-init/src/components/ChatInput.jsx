@@ -1,13 +1,13 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SendHorizonal } from "lucide-react";
+import { SendHorizontal } from "lucide-react";
 
 // ESQUEMA DE VALIDACION
 const messageShema = z.object({
     text: z.string()
     .min(3, "El mensaje de tener al menos 3 caracteres")
-    .min(150, "El mensaje es demaciado largo (max, 150c"),
+    .max(150, "El mensaje es demaciado largo (max, 150c"),
 })
 
 function ChatInput({

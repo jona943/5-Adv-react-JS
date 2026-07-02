@@ -27,30 +27,36 @@ function ChatInput({
         };     
         
     return (
-        <footer>
-            <div>
-                <form onSubmit={handleSubmit(onSubmit)}>
+        <footer className="p-4 bg-slate-900 border-t border-slate-700 shrink-0">
+            <div className="max-w-3xl mx-auto">
+                <form onSubmit={handleSubmit(onSubmit)} className="relative flex items-center">
                     {/*Campo de entrada*/}
                     <input 
                     type="text" placeholder="Escribe tu mensaje a NubIA..."
                     {...register("text")}
+                    className="w-full bg-slate-800 focus:border-green-500 focus:ring-1
+                    focus:ring-green-500 rounded-xl py-3 pl-4 pr-7 text-sm text-green-100
+                    placeholder-green-400 outline-none transition-all"
                     />
 
                     {/*Boton de enviar*/}
-                    <button type="submit">
-                        <SendHorizontal/>
+                    <button 
+                    type="submit"
+                    className="absolute right-3 p-1 text-orange-500 hover:bg-slate-700 
+                    rounded-lg transition-all cursor-pointer">
+                        <SendHorizontal className="h-5.5 w-6"/>
                     </button>
 
                 </form>
 
                 {/*Errores de validacion de Zod*/}
                 {errors.text && (
-                    <span>
+                    <span className="text-red-400 text-xs mt-2 px-1">
                         {errors.text.message}
                     </span>
                 )}
 
-                <p>
+                <p className="text-lime-200 text-center text-[12px] mt-2 tracking-wide">
                     El modelo local puede tardar unos segundos en razonar su respuesta
                 </p>
             </div>

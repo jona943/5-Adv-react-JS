@@ -9,62 +9,63 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedPost, setSelectedPost] = useState(null);
-  // 2. Función asíncrona para consumir la API de jsonplaceholder                                                               
-  const fetchPosts = async () => {
+
+  const fetchCats = async () => {
     try {
       setLoading(true);
       setError(null);
 
       const response = await fetch("https://api.thecatapi.com/v1/images/search?limit=20");
-
-      // Lanzamos error si la respuesta no es exitosa (ej. status 404 o 500)                                                    
       if (!response.ok) {
-        throw new Error("No se pudo conectar con el servidor.");
+        throw new Error("No se pudo conectar con el servidor de gatitos.");
       }
 
       const data = await response.json();
-      setPosts(data.slice(0, 20)); // Guardamos solo los primeros 20 posts                                                      
+      setPosts(data);
     } catch (err) {
       setError(err.message);
     } finally {
-      setLoading(false); // Apagamos el estado de carga al terminar (exitoso o con error)                                       
+      setLoading(false);
     }
   };
 
-  // 3. useEffect para ejecutar la petición automáticamente al montar el componente                                             
   useEffect(() => {
-    fetchPosts();
-  }, []); // Array de dependencias vacío para ejecutarse una sola vez                                                           
+    fetchCats();
+  }, []);
 
   return (
-    <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
-      <h1>Práctica: Consumo de APIs con useEffect</h1>
+    <div className="min-h-screen bg-stone-950 text-stone-100 font-sans p-6 sm:p-12 transition-colors duration-300">
+      <header className="max-w-4xl mx-auto mb-12 text-center">
+        {/* Título minimalista con gradiente primaveral muy vivo */}
+        <h1 className="text-4.5xl sm:text-5.5xl font-black tracking-tight bg-gradient-to-r from-emerald-400 via-teal-300 to-pink-400 bg-clip-text text-transparent">
+          Práctica: Consumo de The Cat API
+        </h1>
+        <p className="text-stone-500 mt-2 text-sm font-medium tracking-wide uppercase">
+          Estructura Limpia & Estilos Minimalistas
+        </p>
+      </header>
 
-      {/* RENDERIZADO CONDICIONAL DE LOS ESTADOS */}
+      <main className="max-w-4xl mx-auto">
+        {loading && <Loading />}
 
-      {/* Estado 1: Cargando */}
-      {loading && <Loading />}
+        {!loading && error && <ErrorCard message={error} onRetry={fetchCats} />}
 
-      {/* Estado 2: Error */}
-      {!loading && error && <ErrorCard message={error} onRetry={fetchPosts} />}
-
-      {/* Estado 3: Éxito (Listado) y Estado 4: Detalle */}
-      {!loading && !error && (
-        selectedPost ? (
-          <PostDetail
-            post={selectedPost}
-            onBack={() => setSelectedPost(null)}
-          />
-        ) : (
-          <PostList
-            posts={posts}
-            onSelectPost={setSelectedPost}
-          />
-        )
-      )}
+        {!loading && !error && (
+          selectedPost ? (
+            <PostDetail 
+              post={selectedPost} 
+              onBack={() => setSelectedPost(null)} 
+            />
+          ) : (
+            <PostList 
+              posts={posts} 
+              onSelectPost={setSelectedPost} 
+            />
+          )
+        )}
+      </main>
     </div>
   );
-
 }
 
 export default App;

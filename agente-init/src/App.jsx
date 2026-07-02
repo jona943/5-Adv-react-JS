@@ -53,12 +53,12 @@ function App() {
       <main className="flex-1 flex flex-col h-full bg-slate-900">
         <header className="border-b border-indigo-400 bg-slate-800 backdrop-blur-md px-6
         py-4 flex items-center justify-between shrink-0">
-          <div className="flex items-center grap-3">
+          <div className="flex items-center gap-3">
             <button className="md:hidden text-slate-400 hover:text-red-500 cursor-pointer">
               <Menu className="h-6 w-6"/>
             </button>
           <div>
-            <h1 className="text-lg font-bold flex items-center grap-2 text-green-200">
+            <h1 className="text-lg font-bold flex items-center gap-2 text-green-200">
               Asistente NubIA
               <span className="h-2 w-2 rounded-full bg-green-500 animate-pulse"/>
             </h1>

@@ -5,8 +5,16 @@ function PostDetail({ post, onBack }) {
 
             <article>
                 <h2>Detalles del Post #{post.id}</h2>
-                <h3>{post.title}</h3>
-                <p>{post.body}</p>
+                <h3>{post.id}</h3>
+                <p>{post.width}px x {post.height}px</p>
+                
+                <div style={{marginTop:'15px'}}>
+                    <img src={post.url} alt={`Gatito ${post.id}`}
+                    style={{maxWidth:'100%', maxHeight:'400px',
+                        borderRadius: '9px'
+                    }}/>
+
+                </div>
             </article>
         </div>
     )

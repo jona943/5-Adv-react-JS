@@ -1,17 +1,17 @@
 function PostList({ posts, onSelectPost}) {
     if (posts.length === 0) {
-        return <p>No hay publicaciones disponibles.</p>
+        return <p>No hay gatitos disponibles.</p>
     }
     return (
         <div>
             <h2>
-                Lista de publicaciones
+                Lista de gatitos
             </h2>
 
             <ul>
-                {posts.map((post) => (
-                    <li key={post.id} onClick={() => onSelectPost(post)} style={{ cursor: 'pointer' }}>
-                        {post.title}
+                {posts.map((cat) => (
+                    <li key={cat.id} onClick={() => onSelectPost(cat)} style={{ cursor: 'pointer' }}>
+                        Ver gatito #{cat.id}
                     </li>
                 ))}
             </ul>

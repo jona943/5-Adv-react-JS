@@ -1,10 +1,16 @@
-import { useState } from 'react';
+import NavBar from './components/NavBar';
+import PostList from './components/PostList';
 
 function App() {
   return (
-    <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
-      <h1>Práctica: Estado Global</h1>
-      {/* Empieza a escribir tu código aquí */}
+    <div className="app-container">
+      {/* Barra de navegación global */}
+      <NavBar />
+
+      {/* Contenido principal del blog */}
+      <main className="main-content">
+        <PostList />
+      </main>
     </div>
   );
 }

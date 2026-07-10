@@ -1,23 +1,28 @@
 import { Bot, MessageSquarePlus } from "lucide-react";
+import { usoChat } from "./ChatContext";
 
-function Sidebar({ chat = [], onNewChat }) {
+function Sidebar() {
+    // Consumimos el contexto global 
+    const { estado, despacho } = usoChat();
     return (
         <aside className="w-64 bg-slate-900 border-r
         border-slate-800 p-4 flex flex-col h-full 
         shrink-0">
             {/*Encabezado lateral*/}
             <div className="flex items-center gap-2 mb-6">
-                <Bot className="text-indigo-400 h-6 w-6"/> {/* Icono de un bot */}
+                <Bot className="text-indigo-400 h-6 w-6" /> {/* Icono de un bot */}
                 <span className="font-bold text-lg text-indigo-300">NubIA-Seek</span>
             </div>
 
             {/*Boton de nuevo chat*/}
-            <button onClick={onNewChat} 
-            className="flex items-center justify-center gap-2 w-full
+            <button onClick={() => despacho({
+                type: 'CREAR_CHAT'
+            })}
+                className="flex items-center justify-center gap-2 w-full
             py-2.5 px-4 bg-orange-600 hover:bg-orange-500 
             active:bg-green-700 text-white font-semibold rounded-lg
             shadow-md cursor-pointer mb-6">
-                <MessageSquarePlus/> {/* Icono de un chat */}
+                <MessageSquarePlus /> {/* Icono de un chat */}
                 <span>Nuevo Chat</span>
             </button>
 
@@ -28,14 +33,19 @@ function Sidebar({ chat = [], onNewChat }) {
                     Historial
                 </p>
                 {/*Recorre el arreglo chat*/}
-                {chat.map((chat, index) => (
-                    <div key={index} className="p-2 hover:bg-slate-800 rounded-lg
-                    text-sm text-slate-400 hover:text-red-200 cursor-pointer
-                    transition border border-transparent hover:border-slate-800
-                    truncate">
-                        {chat.title}
-                    </div>
-                ))}
+                {estado.chats.map((chat) => {
+                    const esActivo = chat.id === estado.chatActivoId;
+                    return (
+                        <div key={chat.id} onClick={() => despacho({ type: 'SELECCIONAR_CHAT', payload: chat.id })}
+                             className={`p-2 rounded-lg text-sm cursor-pointer transition border truncate ${
+                                 esActivo 
+                                     ? "bg-slate-800 text-green-300 border-green-500/30 font-medium" 
+                                     : "text-slate-400 hover:bg-slate-800/50 hover:text-red-200 border-transparent"
+                             }`}>
+                            {chat.titulo}
+                        </div>
+                    );
+                })}
             </div>
 
             {/*Footer lateral*/}

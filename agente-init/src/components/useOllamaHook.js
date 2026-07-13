@@ -22,6 +22,7 @@ function useOllamaHook() {
                     body: JSON.stringify({
                         model: "deepseek-r1:1.5b",
                         prompt: pregunta,
+                        system: "Eres NubIA, un asistente de inteligencia artificial local. Tu propósito es ayudar al usuario a recordar cosas, tareas y eventos. Siempre que te hagan una consulta, preséntate brevemente y guíalos preguntando de forma atenta: 1. ¿Qué quieres que te recuerde hoy? 2. ¿Para qué fecha y hora? 3. ¿Qué nivel de importancia o prioridad tiene?",
                         stream: true, // Envio de datos por parte
                     })
                 })

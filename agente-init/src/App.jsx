@@ -1,54 +1,70 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu } from "lucide-react"
 
 import Sidebar from "./components/Sidebar"; 
 import MessageList from "./components/MessageList";
 import ChatInput from "./components/ChatInput";
 
+// Nuevos hooks 
+import { usoChat } from "./components/ChatContext";
+import useOllamaHook from "./components/useOllamaHook";
+
 function App() {
-  // 
-  const [messages, setMessages] = useState([
-    { text: "¿Como configurar Ollama localmente?", sender: "user" },
-    {text: "¡Hola! Para configurar Ollama de forma local, debes descargar la app desde su sitio oficial, abrir tu terminal y ejecutar el comando: 'ollama run deepseek-r1:1.5b'. ¿Te gustaría que detallemos los pasos?", sender: "bot"}
-  ]);
-  
-  // Lista estatica de simulacion de chats
-  const [historyChats] = useState([
-    { title: "Configuraciones de Ollama"},
-    { title: "Pueba de validacion Zod"}
-  ]);
-  
-  // Estado para controlar cuando esta escribiendo el bot
-  const [loading, setLoading] = useState(false);
+  const {estado, despacho} = usoChat();
+  const {enviarConsulta, respuesta, cargando, error} = useOllamaHook();
 
-  // Funcion orquestadora de mensajes
-  const handleSendMessage = (text) => {
-    // Agregar al estado mensaje de usuario
-    setMessages((prev) => [...prev, {text, sender: "user"}]);
-    // Activacion de anidacion
-    setLoading(true);
-    // Simulacio de respuesta de 1.5 seg
-    setTimeout(() => {
-      setMessages((prev) => [
-        ...prev, {
-          text: `Recibi tu mensaje: "${text}". proximamente lo conectaremos con Ollama Local`,
-          sender: "bot"
-        }
-      ]);
-      setLoading(false);
-    }, 1500);
+  const chatActivo = estado.chats.find(c => c.id === estado.chatActivoId);
+  const mensajes = chatActivo ? chatActivo.mensaje : [];
+  
+  // Si no hay ningun chat en la app al cargar, creamos uno por defect
+  useEffect(() => {
+    if (estado.chats.length === 0) {
+      despacho({ type: 'CREAR_CHAT'});
+    }
+  }, [estado.chats, despacho]);
+
+  useEffect(() => {
+    if (respuesta){
+      despacho({
+        type: 'ACTUALIZAR_BOT_MENSAJE',
+        payload: respuesta
+      });
+    }
+  }, [respuesta, despacho]);
+
+  useEffect(() => {
+    despacho({
+      type: 'CARGANDO',
+      payload: cargando
+    });
+  }, [cargando, despacho]);
+
+  useEffect(() => {
+    if (error){
+      despacho({
+        type:'ERROR',
+        payload: error
+      });
+    }
+  }, [error, despacho]);
+
+  // Funcion para enviar mensaje
+  const enviarMensaje = (text) => {
+    despacho({
+      type: 'AGREGAR_MENSAJE',
+      payload: {text, sender: "user"}
+    });
+    enviarConsulta(text);
   }
 
-  const handleNewChat = () => {
-    setMessages([]); // Limpieza de pantalla para un nuevo chat    
-  }
+
 
   return (
     <div className="
     flex h-screen w-full bg-slate-950 
     text-slate-100 font-sans overflow-hidden">
 
-      <Sidebar chat={historyChats} onNewChat={handleNewChat}/>
+      <Sidebar/>
 
       <main className="flex-1 flex flex-col h-full bg-slate-900">
         <header className="border-b border-indigo-400 bg-slate-800 backdrop-blur-md px-6
@@ -69,9 +85,9 @@ function App() {
           </div>
         </header>
 
-        <MessageList messages={messages} loading={loading}/>
+        <MessageList messages={mensajes} loading={estado.cargando}/>
 
-        <ChatInput onSendMessage={handleSendMessage}/>
+        <ChatInput onSendMessage={enviarMensaje}/>
 
       </main>
     </div>

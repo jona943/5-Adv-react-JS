@@ -9,6 +9,29 @@ const initialState = {
 
 function chatReducer(estado, accion) {
     switch (accion.type) {
+        case 'ACTUALIZAR_BOT_MENSAJE': {
+            return {...estado, chats: estado.chats.map(chat => {
+                if (chat.id === estado.chatActivoId){
+                    const nuevosMensajes = [...chat.mensaje];
+                    const ultimoIndex = nuevosMensajes.length - 1;
+                    // Si el ultimo mensaje es del bot, lo actualizamos con la respuesta acumulada.
+                    // Si no es del bot (es del usuario), agregamos el primer trozo del bot.
+                    if (ultimoIndex >= 0 && nuevosMensajes[ultimoIndex].sender === 'bot'){
+                        nuevosMensajes[ultimoIndex] = {
+                            ...nuevosMensajes[ultimoIndex], text: accion.payload // texto acumulado
+                        };
+                    } else {
+                        nuevosMensajes.push({
+                            text: accion.payload, sender: 'bot'
+                        });
+                    }
+                    return {
+                        ...chat, mensaje: nuevosMensajes
+                    };
+                }
+                return chat;
+            })}
+        };
         case 'CREAR_CHAT': {
             const nuevoChat = {
                 id: Date.now().toString(),

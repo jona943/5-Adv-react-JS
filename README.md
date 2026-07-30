@@ -14,7 +14,8 @@ Repositorio central del **Módulo 5: Front-End Avanzado con React (Context API, 
 
 El repositorio incluye un visor interactivo en la raíz ([`index.html`](./index.html)) diseñado como un **Playground de 4 Focos** para inspeccionar el árbol de código completo de cada componente JSX, examinar Custom Hooks (`useOllamaHook`), reducers, servidores Express, capturas de pantalla de la interfaz y guías técnicas en Markdown.
 
-[Visualiza aquí la demo interactiva y explorador de código en GitHub Pages](https://jona943.github.io/5-Adv-react-JS/)
+- [Visualiza aquí la demo en vivo en Vercel (NubIA-Seek)](https://5-adv-react-js.vercel.app/)
+- [Visualiza la demo interactiva y explorador de código en GitHub Pages](https://jona943.github.io/5-Adv-react-JS/)
 
 ---
 

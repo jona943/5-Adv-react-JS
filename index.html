@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>JS Master Playground Módulo 5 | Front-End Avanzado con React</title>
+
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Prism Syntax Highlighting Theme -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+  
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Lucide Icons & Parsers -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markdown.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
+</head>
+<body class="focus-code">
+
+  <!-- Header Superior -->
+  <header>
+    <div class="brand">
+      <div class="brand-icon">⚡</div>
+      <div class="brand-title">
+        <span class="main-title">JS Master Playground</span>
+        <span class="sub-title">Módulo 5: Front-End Avanzado, Context & AI Streaming</span>
+      </div>
+    </div>
+
+    <div class="header-badges">
+      <div class="badge-beca">
+        <i data-lucide="award" size="14"></i>
+        <span>DEV.F x Traxión Tech Challenge 2025</span>
+      </div>
+      <div class="badge-module">
+        <i data-lucide="bot" size="14"></i>
+        <span>React 19, Context & Ollama</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Layout Principal -->
+  <div class="app-container">
+
+    <!-- Sidebar con Árbol Completo de Archivos (Tree View Explorer) -->
+    <sidebar id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-title">
+          <span>Árbol de Archivos React Avanzado</span>
+          <i data-lucide="folder-tree" size="14"></i>
+        </div>
+        <input type="text" id="searchInput" class="search-box" placeholder="Buscar archivo (ChatContext, reducer...)...">
+      </div>
+
+      <div class="tree-container" id="treeContainer">
+        <!-- Renderizado dinámico del Árbol de Proyectos -->
+      </div>
+    </sidebar>
+
+    <!-- Playground de Código, Demo & Consola -->
+    <main id="mainContent">
+      <div class="browser-window">
+
+        <!-- Toolbar estilo IDE -->
+        <div class="browser-toolbar">
+          <div class="window-dots">
+            <div class="dot dot-red"></div>
+            <div class="dot dot-yellow"></div>
+            <div class="dot dot-green"></div>
+          </div>
+
+          <div class="nav-btns">
+            <button class="nav-btn" id="reloadBtn" title="Recargar"><i data-lucide="rotate-cw" size="16"></i></button>
+          </div>
+
+          <div class="address-bar">
+            <i data-lucide="file-code" size="14" style="color: var(--accent);"></i>
+            <span class="address-text" id="addressUrl">http://localhost/5-Adv-react-JS/...</span>
+          </div>
+
+          <!-- Selector de Modo en Escritorio (Código | Vista Previa / Capturas | Consola) -->
+          <div class="mode-tabs" id="modeTabs">
+            <button class="mode-tab active" id="modeCodeBtn">
+              <i data-lucide="code" size="14"></i> Código Fuente
+            </button>
+            <button class="mode-tab" id="modePreviewBtn">
+              <i data-lucide="image" size="14"></i> Demo / Capturas
+            </button>
+            <button class="mode-tab" id="modeTerminalBtn">
+              <i data-lucide="terminal" size="14"></i> Consola Output
+            </button>
+          </div>
+
+          <div class="toolbar-actions">
+            <a id="externalLink" href="#" target="_blank" class="btn-action" title="Abrir archivo directamente">
+              <i data-lucide="external-link" size="14"></i>
+              <span>Abrir Archivo</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Área Principal de Trabajo (Iframe + Code Viewer + Terminal + MD) -->
+        <div class="viewport-container" id="viewportContainer">
+          
+          <!-- Visor de Código Fuente -->
+          <div class="code-viewer-pane" id="codeViewerPane">
+            <pre><code id="codeViewer" class="language-jsx">// Selecciona un archivo del árbol en la barra lateral para inspeccionar componentes, custom hooks o reducers.</code></pre>
+          </div>
+
+          <!-- Vista Iframe / Showcase de Capturas -->
+          <iframe id="previewIframe" src="about:blank"></iframe>
+
+          <!-- Panel de Consola Terminal -->
+          <div class="terminal-pane" id="terminalPane">
+            <div class="terminal-header">
+              <div class="terminal-title">
+                <i data-lucide="terminal" size="14"></i>
+                <span>REACT ADVANCED MONITOR</span>
+              </div>
+              <button class="nav-btn" id="clearTerminalBtn" title="Limpiar Consola" style="font-size:0.75rem; gap:4px;">
+                <i data-lucide="trash-2" size="12"></i> Limpiar
+              </button>
+            </div>
+            <div class="terminal-body" id="terminalBody">
+              <div class="log-line system"><span class="log-prompt">$</span> Consola React Avanzado lista.</div>
+            </div>
+          </div>
+
+          <!-- Visor de Markdown -->
+          <div class="markdown-pane" id="markdownViewPane">
+            <div id="markdownContent"></div>
+          </div>
+
+        </div>
+
+        <!-- Footer Informativo -->
+        <div class="info-footer">
+          <div class="status-indicator">
+            <div class="status-dot" id="statusDot"></div>
+            <span id="statusText">Selecciona un archivo del árbol</span>
+          </div>
+          <span id="lessonCategory">Módulo 5: React Avanzado & AI</span>
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Barra de Navegación Inferior Móvil (4 Focos) -->
+  <nav class="mobile-bottom-nav" id="mobileBottomNav">
+    <button class="nav-tab active" id="navTopicsBtn">
+      <i data-lucide="folder-tree" size="18"></i>
+      <span>Árbol</span>
+    </button>
+    <button class="nav-tab" id="navCodeBtn">
+      <i data-lucide="code" size="18"></i>
+      <span>Código</span>
+    </button>
+    <button class="nav-tab" id="navPreviewBtn">
+      <i data-lucide="image" size="18"></i>
+      <span>Demo</span>
+    </button>
+    <button class="nav-tab" id="navTerminalBtn">
+      <i data-lucide="terminal" size="18"></i>
+      <span>Consola</span>
+      <span class="nav-badge" id="mobileLogBadge" style="display:none;">0</span>
+    </button>
+  </nav>
+
+  <script>
+    // Catálogo Estructurado en Árbol de Todos los Proyectos de Módulo 5
+    const projectsTreeData = [
+      {
+        id: "p1-nubia-seek",
+        title: "💬 1. NubIA-Seek (Chatbot Local IA con Ollama + DeepSeek-R1)",
+        tag: "ai",
+        demoUrl: "agente-init/index.html",
+        files: [
+          { name: "src/App.jsx", url: "agente-init/src/App.jsx", lang: "jsx" },
+          { name: "src/main.jsx", url: "agente-init/src/main.jsx", lang: "jsx" },
+          { name: "src/components/ChatContext.jsx", url: "agente-init/src/components/ChatContext.jsx", lang: "jsx" },
+          { name: "src/components/ChatInput.jsx", url: "agente-init/src/components/ChatInput.jsx", lang: "jsx" },
+          { name: "src/components/MessageList.jsx", url: "agente-init/src/components/MessageList.jsx", lang: "jsx" },
+          { name: "src/components/Sidebar.jsx", url: "agente-init/src/components/Sidebar.jsx", lang: "jsx" },
+          { name: "src/components/chatReducer.js", url: "agente-init/src/components/chatReducer.js", lang: "javascript" },
+          { name: "src/components/useOllamaHook.js", url: "agente-init/src/components/useOllamaHook.js", lang: "javascript" },
+          { name: "src/components/FormTest.jsx", url: "agente-init/src/components/FormTest.jsx", lang: "jsx" },
+          { name: "index.html", url: "agente-init/index.html", lang: "markup" },
+          { name: "package.json", url: "agente-init/package.json", lang: "json" },
+          { name: "vite.config.js", url: "agente-init/vite.config.js", lang: "javascript" },
+          { name: "README.md", url: "agente-init/README.md", lang: "markdown" }
+        ]
+      },
+      {
+        id: "p2-express-server",
+        title: "⚙️ 2. Servidor Backend Local (Node.js & Express)",
+        tag: "node",
+        demoUrl: "",
+        files: [
+          { name: "server/index.js", url: "agente-init/server/index.js", lang: "javascript" },
+          { name: "server/package.json", url: "agente-init/server/package.json", lang: "json" }
+        ]
+      },
+      {
+        id: "p3-consumo-api",
+        title: "🌐 3. Consumo de API REST (Peticiones Asíncronas & Manejo de Estado)",
+        tag: "react",
+        demoUrl: "consumoAPI/index.html",
+        files: [
+          { name: "src/App.jsx", url: "consumoAPI/src/App.jsx", lang: "jsx" },
+          { name: "src/main.jsx", url: "consumoAPI/src/main.jsx", lang: "jsx" },
+          { name: "src/components/PostList.jsx", url: "consumoAPI/src/components/PostList.jsx", lang: "jsx" },
+          { name: "src/components/PostDetail.jsx", url: "consumoAPI/src/components/PostDetail.jsx", lang: "jsx" },
+          { name: "src/components/Loading.jsx", url: "consumoAPI/src/components/Loading.jsx", lang: "jsx" },
+          { name: "src/components/ErrorCard.jsx", url: "consumoAPI/src/components/ErrorCard.jsx", lang: "jsx" },
+          { name: "index.html", url: "consumoAPI/index.html", lang: "markup" },
+          { name: "package.json", url: "consumoAPI/package.json", lang: "json" },
+          { name: "vite.config.js", url: "consumoAPI/vite.config.js", lang: "javascript" },
+          { name: "README.md", url: "consumoAPI/README.md", lang: "markdown" }
+        ]
+      },
+      {
+        id: "p4-estado-global",
+        title: "📝 4. Estado Global & Context API (Blog Interactivo con Persistencia)",
+        tag: "react",
+        demoUrl: "estado-global/index.html",
+        files: [
+          { name: "src/App.jsx", url: "estado-global/src/App.jsx", lang: "jsx" },
+          { name: "src/main.jsx", url: "estado-global/src/main.jsx", lang: "jsx" },
+          { name: "src/context/UserContext.jsx", url: "estado-global/src/context/UserContext.jsx", lang: "jsx" },
+          { name: "src/components/NavBar.jsx", url: "estado-global/src/components/NavBar.jsx", lang: "jsx" },
+          { name: "src/components/PostList.jsx", url: "estado-global/src/components/PostList.jsx", lang: "jsx" },
+          { name: "src/index.css", url: "estado-global/src/index.css", lang: "css" },
+          { name: "index.html", url: "estado-global/index.html", lang: "markup" },
+          { name: "package.json", url: "estado-global/package.json", lang: "json" },
+          { name: "vite.config.js", url: "estado-global/vite.config.js", lang: "javascript" },
+          { name: "README.md", url: "estado-global/README.md", lang: "markdown" }
+        ]
+      }
+    ];
+
+    // Estado Global
+    let activeFileUrl = '';
+    let currentContent = '';
+    let logCount = 0;
+    let currentFocus = 'code';
+
+    // Elementos DOM
+    const treeContainer = document.getElementById('treeContainer');
+    const searchInput = document.getElementById('searchInput');
+    const iframe = document.getElementById('previewIframe');
+    const addressUrl = document.getElementById('addressUrl');
+    const externalLink = document.getElementById('externalLink');
+    const reloadBtn = document.getElementById('reloadBtn');
+    const clearTerminalBtn = document.getElementById('clearTerminalBtn');
+
+    const modePreviewBtn = document.getElementById('modePreviewBtn');
+    const modeCodeBtn = document.getElementById('modeCodeBtn');
+    const modeTerminalBtn = document.getElementById('modeTerminalBtn');
+
+    const codeViewerPane = document.getElementById('codeViewerPane');
+    const codeViewer = document.getElementById('codeViewer');
+    const terminalPane = document.getElementById('terminalPane');
+    const terminalBody = document.getElementById('terminalBody');
+    const markdownViewPane = document.getElementById('markdownViewPane');
+    const markdownContent = document.getElementById('markdownContent');
+
+    const statusDot = document.getElementById('statusDot');
+    const statusText = document.getElementById('statusText');
+    const lessonCategory = document.getElementById('lessonCategory');
+
+    const navTopicsBtn = document.getElementById('navTopicsBtn');
+    const navCodeBtn = document.getElementById('navCodeBtn');
+    const navPreviewBtn = document.getElementById('navPreviewBtn');
+    const navTerminalBtn = document.getElementById('navTerminalBtn');
+    const mobileLogBadge = document.getElementById('mobileLogBadge');
+
+    // Cambiar Foco Móvil / Desktop
+    function setFocusMode(mode) {
+      currentFocus = mode;
+      document.body.className = `focus-${mode}`;
+
+      navTopicsBtn.classList.toggle('active', mode === 'topics');
+      navCodeBtn.classList.toggle('active', mode === 'code');
+      navPreviewBtn.classList.toggle('active', mode === 'preview');
+      navTerminalBtn.classList.toggle('active', mode === 'terminal');
+
+      modeCodeBtn.classList.toggle('active', mode === 'code');
+      modePreviewBtn.classList.toggle('active', mode === 'preview');
+      modeTerminalBtn.classList.toggle('active', mode === 'terminal');
+
+      if (activeFileUrl.endsWith('.md')) {
+        iframe.style.display = 'none';
+        codeViewerPane.style.display = 'none';
+        terminalPane.style.display = 'none';
+        markdownViewPane.style.display = 'block';
+      } else {
+        markdownViewPane.style.display = 'none';
+        iframe.style.display = (mode === 'preview') ? 'block' : 'none';
+        codeViewerPane.style.display = (mode === 'code') ? 'block' : 'none';
+        terminalPane.style.display = (mode === 'terminal') ? 'flex' : 'none';
+      }
+    }
+
+    navTopicsBtn.addEventListener('click', () => setFocusMode('topics'));
+    navCodeBtn.addEventListener('click', () => setFocusMode('code'));
+    navPreviewBtn.addEventListener('click', () => setFocusMode('preview'));
+    navTerminalBtn.addEventListener('click', () => setFocusMode('terminal'));
+
+    modeCodeBtn.addEventListener('click', () => setFocusMode('code'));
+    modePreviewBtn.addEventListener('click', () => setFocusMode('preview'));
+    modeTerminalBtn.addEventListener('click', () => setFocusMode('terminal'));
+
+    // Renderizar Árbol de Proyectos (Tree View Explorer)
+    function renderProjectTree(filter = '') {
+      treeContainer.innerHTML = '';
+
+      projectsTreeData.forEach((project, pIndex) => {
+        const matchingFiles = project.files.filter(f => 
+          f.name.toLowerCase().includes(filter.toLowerCase()) ||
+          project.title.toLowerCase().includes(filter.toLowerCase())
+        );
+
+        if (filter && matchingFiles.length === 0) return;
+
+        const node = document.createElement('div');
+        node.className = `project-node ${pIndex !== 0 && !filter ? 'collapsed' : ''}`;
+        
+        node.innerHTML = `
+          <div class="project-header">
+            <i data-lucide="chevron-down" size="14" class="chevron"></i>
+            <i data-lucide="folder-git-2" size="16" style="color:var(--accent);"></i>
+            <span style="flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${project.title}</span>
+          </div>
+          <div class="project-files"></div>
+        `;
+
+        const headerEl = node.querySelector('.project-header');
+        const filesEl = node.querySelector('.project-files');
+
+        headerEl.addEventListener('click', () => {
+          node.classList.toggle('collapsed');
+          if (project.demoUrl) {
+            iframe.src = project.demoUrl;
+          }
+        });
+
+        const filesToRender = filter ? matchingFiles : project.files;
+
+        filesToRender.forEach(file => {
+          const fileDiv = document.createElement('div');
+          fileDiv.className = `file-item ${file.url === activeFileUrl ? 'active' : ''}`;
+
+          let iconName = 'file-code';
+          if (file.lang === 'markdown') iconName = 'file-text';
+          if (file.lang === 'json') iconName = 'file-json';
+          if (file.lang === 'css') iconName = 'palette';
+          if (file.lang === 'markup') iconName = 'globe';
+
+          fileDiv.innerHTML = `
+            <i data-lucide="${iconName}" size="14"></i>
+            <span class="file-name">${file.name}</span>
+            <span class="file-badge tag-${project.tag}">${file.lang}</span>
+          `;
+
+          fileDiv.addEventListener('click', (e) => {
+            e.stopPropagation();
+            loadFile(file, project);
+            if (window.innerWidth <= 768) {
+              setFocusMode(file.lang === 'markdown' ? 'preview' : 'code');
+            }
+          });
+
+          filesEl.appendChild(fileDiv);
+        });
+
+        treeContainer.appendChild(node);
+      });
+
+      lucide.createIcons();
+    }
+
+    // Cargar e Inspeccionar Archivo del Árbol
+    async function loadFile(file, project) {
+      activeFileUrl = file.url;
+
+      document.querySelectorAll('.file-item').forEach(el => el.classList.remove('active'));
+      renderProjectTree(searchInput.value);
+
+      addressUrl.textContent = `http://localhost/5-Adv-react-JS/${file.url}`;
+      externalLink.href = file.url;
+      lessonCategory.textContent = `${project.title} — ${file.name}`;
+      
+      statusText.textContent = `Cargando ${file.name}...`;
+      statusDot.style.background = "#f59e0b";
+
+      appendLog(`▶ Abriendo archivo: ${file.name} (${file.url})`, 'system');
+
+      try {
+        const response = await fetch(file.url);
+        if (!response.ok) throw new Error(`HTTP status ${response.status}`);
+        currentContent = await response.text();
+
+        if (file.lang === 'markdown') {
+          markdownContent.innerHTML = marked.parse(currentContent);
+          setFocusMode('preview');
+        } else {
+          codeViewer.className = `language-${file.lang}`;
+          codeViewer.textContent = currentContent;
+          Prism.highlightElement(codeViewer);
+
+          if (project.demoUrl) {
+            iframe.src = project.demoUrl;
+          }
+
+          setFocusMode('code');
+        }
+
+        statusText.textContent = "Archivo cargado correctamente";
+        statusDot.style.background = "#10b981";
+
+      } catch (err) {
+        currentContent = `// Error al cargar ${file.url}: ${err.message}`;
+        codeViewer.textContent = currentContent;
+        statusText.textContent = "Error de carga";
+        statusDot.style.background = "#ef4444";
+      }
+    }
+
+    function formatArg(arg) {
+      if (typeof arg === 'object' && arg !== null) {
+        try { return JSON.stringify(arg, null, 2); } catch(e) { return String(arg); }
+      }
+      return String(arg);
+    }
+
+    function appendLog(message, type = 'log') {
+      logCount++;
+      mobileLogBadge.textContent = logCount;
+      mobileLogBadge.style.display = 'inline-block';
+
+      const line = document.createElement('div');
+      line.className = `log-line ${type}`;
+      
+      const prompt = document.createElement('span');
+      prompt.className = 'log-prompt';
+      prompt.textContent = type === 'system' ? '$' : '>';
+      
+      const content = document.createElement('span');
+      content.textContent = message;
+      
+      line.appendChild(prompt);
+      line.appendChild(content);
+      terminalBody.appendChild(line);
+      
+      terminalBody.scrollTop = terminalBody.scrollHeight;
+    }
+
+    clearTerminalBtn.addEventListener('click', () => {
+      terminalBody.innerHTML = `<div class="log-line system"><span class="log-prompt">$</span> Consola limpia.</div>`;
+      logCount = 0;
+      mobileLogBadge.style.display = 'none';
+    });
+
+    reloadBtn.addEventListener('click', () => {
+      if (activeFileUrl) {
+        const item = projectsTreeData.flatMap(p => p.files).find(f => f.url === activeFileUrl);
+        const proj = projectsTreeData.find(p => p.files.includes(item));
+        if (item && proj) loadFile(item, proj);
+      }
+    });
+
+    searchInput.addEventListener('input', (e) => {
+      renderProjectTree(e.target.value);
+    });
+
+    // Carga Inicial
+    document.addEventListener('DOMContentLoaded', () => {
+      renderProjectTree();
+      // Cargar ChatContext.jsx por defecto
+      const defaultProject = projectsTreeData[0];
+      const defaultFile = defaultProject.files[2];
+      loadFile(defaultFile, defaultProject);
+    });
+  </script>
+</body>
+</html>

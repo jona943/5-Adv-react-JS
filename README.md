@@ -1,31 +1,44 @@
-# 🚀 Front-End Avanzado con React — Portafolio de Proyectos
+# <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" width="35" height="35" valign="middle" /> Master en Frontend Asistido con IA — Módulo 5: Front-End Avanzado con React
 
-¡Bienvenido a mi portafolio de proyectos de desarrollo frontend! Este repositorio contiene todos los desarrollos, arquitecturas y laboratorios construidos durante mi formación en el módulo de **Front-End Avanzado con React** en **[DEV.F](https://www.devf.la/)**, auspiciado bajo el programa de becas de **[Bécalos](https://becalos.mx/)**. 
+[![Bootcamp - DEV.F](https://img.shields.io/badge/Bootcamp-DEV.F-0052CC?style=for-the-badge&logo=codecademy&logoColor=white)](#)
+[![Programa - Beca Traxión Tech Challenge / Bécalos](https://img.shields.io/badge/Programa-Beca%20B%C3%A9calos%20x%20DEV.F-E95420?style=for-the-badge&logo=award&logoColor=white)](#)
+[![Framework - React 19](https://img.shields.io/badge/Framework-React%2019-38B2AC?style=for-the-badge&logo=react&logoColor=61DAFB)](#)
+[![AI - Ollama / DeepSeek](https://img.shields.io/badge/AI-Ollama%20(DeepSeek)-black?style=for-the-badge&logo=ollama&logoColor=white)](#)
+[![Backend - Express](https://img.shields.io/badge/Backend-Express-000000?style=for-the-badge&logo=express&logoColor=white)](#)
 
-Mi nombre es **Jonathan Medina** y aquí documento mi progreso práctico construyendo aplicaciones SPA reactivas, integrando APIs, gestionando estados globales complejos y levantando servidores locales de soporte.
-
----
-
-## 🛠️ Tecnologías Utilizadas
-
-En estos proyectos aplico tecnologías modernas del ecosistema de JavaScript:
-
-![React](https://img.shields.io/badge/React_19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=FFD62B)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS_v4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
-![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)
-![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
-![Ollama](https://img.shields.io/badge/Ollama_(DeepSeek)-black?style=for-the-badge&logo=ollama&logoColor=white)
+Repositorio central del **Módulo 5: Front-End Avanzado con React (Context API, useReducer, Custom Hooks, Integración de IA con Ollama y Backend Express)** perteneciente al **Master en Frontend Asistido con IA**. Este módulo profundiza en patrones avanzados de gestión de estado global, streaming de datos con Inteligencia Artificial local (DeepSeek-R1), consumo asíncrono de APIs REST con estados de carga/error y despliegue de servidores servidor locales con Express.
 
 ---
 
-## 📂 Proyectos Incluidos
+## <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/chrome/chrome-original.svg" width="22" height="22" valign="middle" /> Visor Interactivo & Portafolio Playground
+
+El repositorio incluye un visor interactivo en la raíz ([`index.html`](./index.html)) diseñado como un **Playground de 4 Focos** para inspeccionar el árbol de código completo de cada componente JSX, examinar Custom Hooks (`useOllamaHook`), reducers, servidores Express, capturas de pantalla de la interfaz y guías técnicas en Markdown.
+
+[Visualiza aquí la demo interactiva y explorador de código en GitHub Pages](https://jona943.github.io/5-Adv-react-JS/)
+
+---
+
+## 📂 Proyectos e Integraciones
+
+```text
+5-Adv-react-JS/
+├── index.html                                          # Visor Interactivo, Playground & Explorador de Código
+├── style.css                                           # Sistema de estilos e interfaz de 4 focos Avanzada
+├── README.md                                           # Documentación principal del Módulo 5
+├── agente-init/                                        # 💬 1. NubIA-Seek (Chatbot Local IA con Ollama + DeepSeek-R1)
+│   ├── server/                                         # ⚙️ 2. Servidor Backend Local (Node.js & Express)
+│   └── src/components/                                 # Custom Hooks (useOllamaHook), Context API & Reducers
+├── consumoAPI/                                         # 🌐 3. Consumo de API REST (Peticiones Asíncronas & Loading/Error)
+└── estado-global/                                      # 📝 4. Estado Global & Context API (Blog Interactivo con Persistencia)
+```
+
+---
+
+## 📸 Galería de Arquitectura y Capturas de Pantalla
 
 ### 💬 1. NubIA-Seek (Chatbot Local con Inteligencia Artificial)
 * **Directorio:** `agente-init/`
-* **Descripción:** Un clon interactivo de ChatGPT que se ejecuta de forma local. Utiliza un Custom Hook personalizado para procesar y consumir el streaming en tiempo real (palabra por palabra) de la API local de **Ollama** con el modelo **DeepSeek-R1 (1.5b)**. La arquitectura del estado global (historial de chats y mensajes) se gestiona de forma centralizada utilizando **Context API** y **useReducer** de forma inmutable.
-
-#### 📸 Capturas de Pantalla (NubIA-Seek):
+* **Descripción:** Clon interactivo de ChatGPT ejecutado de forma local. Utiliza un Custom Hook personalizado (`useOllamaHook.js`) para consumir el streaming palabra por palabra de la API local de **Ollama** con el modelo **DeepSeek-R1 (1.5b)**. La arquitectura del estado global (historial de chats y mensajes) se gestiona de forma centralizada con **Context API** y **useReducer**.
 
 | 🖥️ Interfaz del Chat (NubIA) | 📐 Maquetado y Diseño Inicial |
 | :---: | :---: |
@@ -37,11 +50,9 @@ En estos proyectos aplico tecnologías modernas del ecosistema de JavaScript:
 
 ---
 
-### 🌐 2. Consumo de API (Consumo Asíncrono)
+### 🌐 2. Consumo de API REST (Peticiones Asíncronas)
 * **Directorio:** `consumoAPI/`
-* **Descripción:** Aplicación enfocada en la interacción asíncrona con servicios de API REST. Permite realizar consultas GET, renderizar listados interactivos dinámicos y gestionar pantallas de carga (`Loading`) y errores de conexión (`ErrorCard`) mediante componentes independientes.
-
-#### 📸 Capturas de Pantalla (Consumo de API):
+* **Descripción:** Aplicación enfocada en la interacción asíncrona con servicios de API REST. Permite realizar consultas GET, renderizar listados interactivos dinámicos y gestionar pantallas de carga (`Loading.jsx`) y errores de conexión (`ErrorCard.jsx`) mediante componentes independientes.
 
 | 📄 Listado Principal de Datos | 🔍 Detalle del Registro Seleccionado |
 | :---: | :---: |
@@ -51,9 +62,7 @@ En estos proyectos aplico tecnologías modernas del ecosistema de JavaScript:
 
 ### 📝 3. Estado Global (Blog Interactivo con Persistencia)
 * **Directorio:** `estado-global/`
-* **Descripción:** Un blog modular interactivo donde se aplica **Context API** para compartir información transversal del usuario (nombre de usuario, foto de perfil, etc.) entre componentes hermanos sin realizar *prop drilling*. Además, incorpora persistencia en memoria mediante `localStorage` de forma reactiva.
-
-#### 📸 Captura de Pantalla (Blog con Estado Global):
+* **Descripción:** Blog modular interactivo donde se aplica **Context API** (`UserContext.jsx`) para compartir información transversal del usuario (nombre, foto de perfil, etc.) entre componentes hermanos evitando el *prop drilling*, incorporando además persistencia reactiva en `localStorage`.
 
 | 🎨 Interfaz del Blog Interactivo |
 | :---: |
@@ -63,9 +72,7 @@ En estos proyectos aplico tecnologías modernas del ecosistema de JavaScript:
 
 ### ⚙️ 4. Servidor Backend Inicial (Express)
 * **Directorio:** `agente-init/server/`
-* **Descripción:** Servidor ligero creado en **Node.js** con **Express** que actúa como nuestro primer backend local. Configurado con módulos ES (`import`/`export`) y habilitación de políticas de CORS para permitir la comunicación segura entre el servidor local y el frontend en Vite. Responde con un endpoint base de "Hola Mundo".
-
-#### 📸 Captura de Pantalla (Servidor Express):
+* **Descripción:** Servidor ligero creado en **Node.js** con **Express** que actúa como backend local. Configurado con módulos ES (`import`/`export`) y habilitación de políticas de CORS para la comunicación segura con el frontend en Vite.
 
 | 🟢 Servidor Levantado y Escuchando |
 | :---: |
@@ -75,6 +82,8 @@ En estos proyectos aplico tecnologías modernas del ecosistema de JavaScript:
 
 ## 🎓 Agradecimientos
 
-Agradezco profundamente a **Bécalos** por otorgarme la beca que hace posible mi formación tecnológica, y a **DEV.F** por proveer un espacio didáctico de alto nivel para perfeccionar mis habilidades de programación. 
+Agradezco profundamente a **Bécalos** por otorgarme la beca que hace posible mi formación tecnológica, y a **DEV.F** por proveer un espacio didáctico de alto nivel para perfeccionar mis habilidades de desarrollo frontend avanzado.
 
-*Desarrollado con dedicación por Jonathan Medina - 2026.*
+<p align="center">
+  <sub>Módulo 5 — Master en Frontend Asistido con IA | DEV.F x Bécalos</sub>
+</p>
